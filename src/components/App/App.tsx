@@ -14,6 +14,7 @@ function App() {
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+
   const movieSubmit = async (query: string) => {
     try {
       setError(false);
@@ -24,27 +25,30 @@ function App() {
       setError(true);
     } finally {
       setLoading(false);
-      if (movies.length === 0) {
+      const data = await fetchMovies(query);
+      if (data.length === 0) {
         toast("No movies found for your request.");
       }
     }
   };
 
-  const movieClick = (movie: Movie | null) => {
+  const movieClick = (movie: Movie) => {
     setSelectedMovie(movie);
   };
-
+  const handleClose = () => {
+    setSelectedMovie(null);
+  };
   return (
     <>
       <SearchBar onSubmit={movieSubmit} />
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}
-      {movies.length > 0 && <MovieGrid onClick={movieClick} movies={movies} />}
+      {movies.length > 0 && <MovieGrid onSelect={movieClick} movies={movies} />}
       {selectedMovie && (
         <MovieModal
           movie={selectedMovie}
           onClose={() => {
-            movieClick(null);
+            handleClose();
           }}
         />
       )}

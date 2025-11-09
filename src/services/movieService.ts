@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { Movie } from "../types/movie";
+
 interface movieServiceType {
   page: number;
   results: Movie[];
@@ -7,8 +8,7 @@ interface movieServiceType {
   total_results: number;
 }
 
-const TMDB_BEARER_TOKEN =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMDdjNWUwYjFmMzkzY2FhZWQ4YTE4YjU5ODcwYWY1MSIsIm5iZiI6MTcyNTgxMzE4My42MjYsInN1YiI6IjY2ZGRkMWJmYjcwY2M3ZjZmZDc4ODBjMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.B18nT--uizUGej7XJJdG0DEauMUSAGWsgxbbNtFOVx8";
+const TMDB_BEARER_TOKEN = import.meta.env.VITE_TMDB_TOKEN;
 
 export const fetchMovies = async (query: string): Promise<Movie[]> => {
   const TMDB_URL = "https://api.themoviedb.org/3/search/movie";
