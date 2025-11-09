@@ -20,15 +20,14 @@ function App() {
       setError(false);
       setLoading(true);
       const data = await fetchMovies(query);
+      if (data.length === 0) {
+        toast("No movies found for your request.");
+      }
       setMovies(data);
     } catch {
       setError(true);
     } finally {
       setLoading(false);
-      const data = await fetchMovies(query);
-      if (data.length === 0) {
-        toast("No movies found for your request.");
-      }
     }
   };
 
